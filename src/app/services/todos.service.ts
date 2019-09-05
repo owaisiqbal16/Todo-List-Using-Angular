@@ -5,7 +5,7 @@ import { Todo } from '../models/Todo';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type' : 'application/json'
+    'Content-Type': 'application/json'
   })
 }
 
@@ -24,6 +24,18 @@ export class TodosService {
   //Get Todos
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${this.todosUrl}${this.todosLimit}`);
+  }
+
+  //Add Todos
+
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.http.post<Todo>(this.todosUrl, todo, httpOptions)
+  }
+
+  //Delete Todos
+  deleteTodo(todo: Todo): Observable<Todo> {
+    const url = `${this.todosUrl}/${todo.id}`;
+    return this.http.delete<Todo>(url, httpOptions);
   }
 
   //Toggle Completed
